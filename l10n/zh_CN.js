@@ -6,5 +6,7 @@ OC.L10N.register(
         'This is not a directory' : '这不是一个目录',
         'previous chapter' : '上一章',
         'next chapter' : '下一章',
+        'chapter' : '章节',
+        'This folder is empty' : '这个文件夹里空空如也'
     },''
 )

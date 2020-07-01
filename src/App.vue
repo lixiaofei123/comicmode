@@ -1,27 +1,57 @@
 <template>
 	<div class="page">
-		<div class="title">
-			{{ title }}
+		<div class="main">
+			<div class="title">
+				{{ title }}
+			</div>
+			<div class="imglist">
+				<div v-if="hasImg">
+					<div v-for="img in imglist" :key="img.name">
+						<img :id="img.name"
+							class="img"
+							:style="{'max-width':imgMaxWidth}"
+							:origin-src="img.url">
+					</div>
+					<div class="chapters">
+						<div v-if="previousChapter" class="chapterbox textleft">
+							<a class="link"
+								href="javascript:void(0)"
+								@click="gotoPreviousChapter()"
+								v-text="t('comicmode', 'previous chapter') + ': ' + previousChapter.name" />
+						</div>
+						<div v-if="nextChapter" class="chapterbox textright">
+							<a class="link"
+								href="javascript:void(0)"
+								@click="gotoNextChapter()"
+								v-text="t('comicmode', 'next chapter') + ': ' + nextChapter.name" />
+						</div>
+					</div>
+				</div>
+				<div v-else>
+					<div class="empty" v-text="t('comicmode', 'This folder is empty')" />
+				</div>
+			</div>
 		</div>
-		<div class="imglist">
-			<div v-for="img in imglist" :key="img.name">
-				<img :id="img.name"
-					class="img"
-					:style="{'max-width':imgMaxWidth}"
-					:origin-src="img.url">
+		<div v-if="showCatalog" class="catalog fade-enter-width">
+			<a href="#"
+				title="close"
+				class="app-sidebar__close icon-close"
+				@click="closeCatalog()" />
+			<div class="title">
+				<h3 v-text="t('comicmode', 'chapter')" />
 			</div>
-			<div class="chapters">
-				<div v-if="previousChapterUrl" class="chapterbox textleft">
-					<a class="link" href="javascript:void(0)" @click="gotoPreviousChapter()">{{ previousChapter }}</a>
-				</div>
-				<div v-if="nextChapterUrl" class="chapterbox textright">
-					<a class="link" href="javascript:void(0)" @click="gotoNextChapter()">{{ nextChapter }}</a>
-				</div>
-			</div>
+			<ul>
+				<li v-for="(chapter,index) in chapters" :key="chapter.name" class="item">
+					<a :class="{'color_skybule' :chapter.isCurrent }" :href="chapter.url" v-text="(index + 1) + ' :' + chapter.name" />
+				</li>
+			</ul>
 		</div>
 		<div class="right-bottom">
 			<div class="icon white-icon rotate180" @click="up()">
 				<img :src="icons.download">
+			</div>
+			<div class="icon white-icon" @click="catalog()">
+				<img :src="icons.catalog">
 			</div>
 			<div class="icon white-icon gt800px" @click="fullscreen()">
 				<img :src="icons.fullscreen">
@@ -41,15 +71,14 @@ export default {
 	data() {
 		return {
 			dir: '',
-			previousChapter: '',
-			nextChapter: '',
-			previousChapterUrl: '',
-			nextChapterUrl: '',
 			imgMaxWidth: '600px',
+			chapters: [],
+			showCatalog: false,
 			icons: {
 				close: '/custom_apps/comicmode/img/close-white.png',
 				download: '/custom_apps/comicmode/img/download-white.png',
 				fullscreen: '/custom_apps/comicmode/img/fullscreen-white.png',
+				catalog: '/custom_apps/comicmode/img/toggle-filelist-white.png',
 			},
 			imglist: [
 
@@ -57,12 +86,30 @@ export default {
 		}
 	},
 	computed: {
+		hasImg() {
+			return this.imglist.length !== 0
+		},
 		parentDir() {
 			return this.dir.substring(0, this.dir.lastIndexOf('/'))
 		},
 		title() {
 			return this.dir.substring(this.dir.lastIndexOf('/') + 1)
 		},
+		previousChapter() {
+			const index = this.chapters.findIndex(c => c.isCurrent)
+			if (index !== -1 && index !== 0) {
+				return this.chapters[index - 1]
+			}
+			return undefined
+		},
+		nextChapter() {
+			const index = this.chapters.findIndex(c => c.isCurrent)
+			if (index !== -1 && index !== (this.chapters.length - 1)) {
+				return this.chapters[index + 1]
+			}
+			return undefined
+		},
+
 	},
 	mounted() {
 		this.init()
@@ -102,25 +149,19 @@ export default {
 						const imgEle = document.getElementById(img.name)
 					 imgLazyProcessor.observe(imgEle)
 					})
-					// 设置上下章
 					let brothers = data.brothers
 					if (brothers.length > 0) {
 						brothers = brothers.sort(this.sort)
-						let currentIndex = -1
 						for (let i = 0; i < brothers.length; i++) {
-							if (brothers[i].name === this.title) {
-								currentIndex = i
+							const chapter = {
+								name: brothers[i].name,
+								url: OC.generateUrl('/apps/comicmode/?dir=' + this.parentDir + '/' + brothers[i].name),
 							}
-						}
-						if (currentIndex !== 0) {
-							const name = brothers[currentIndex - 1].name
-							this.previousChapter = t('comicmode', 'previous chapter') + ': ' + name
-							this.previousChapterUrl = OC.generateUrl('/apps/comicmode/?dir=' + this.parentDir + '/' + name)
-						}
-						if (currentIndex !== brothers.length - 1) {
-							const name = brothers[currentIndex + 1].name
-							this.nextChapter = t('comicmode', 'next chapter') + ': ' + name
-							this.nextChapterUrl = OC.generateUrl('/apps/comicmode/?dir=' + this.parentDir + '/' + name)
+							if (brothers[i].name === this.title) {
+								chapter.isCurrent = true
+							}
+							this.chapters.push(chapter)
+
 						}
 					}
 
@@ -160,10 +201,16 @@ export default {
 			window.scrollTo(0, 0)
 		},
 		gotoPreviousChapter() {
-			window.location.replace(this.previousChapterUrl)
+			window.location.replace(this.previousChapter.url)
 		},
 		gotoNextChapter() {
-			window.location.replace(this.nextChapterUrl)
+			window.location.replace(this.nextChapter.url)
+		},
+		catalog() {
+			this.showCatalog = !this.showCatalog
+		},
+		closeCatalog() {
+			this.showCatalog = false
 		},
 
 	},
@@ -173,6 +220,7 @@ export default {
 .page{
     padding: 0px;
 	width: 100%;
+	display: flex;
 }
 
 .title{
@@ -214,6 +262,7 @@ export default {
 	position: fixed;
 	right: 20px;
 	bottom: 60px;
+	z-index: 2000;
 }
 
 .chapterbox{
@@ -230,7 +279,7 @@ export default {
 
 .link{
 	text-decoration: none;
-	color: skyblue;
+	color: #28ADF6;
 }
 
 .rotate180{
@@ -239,6 +288,85 @@ export default {
 
 .gt800px{
 	display: none;
+}
+
+.main{
+	flex: 1;
+}
+
+.fade-enter-width{
+	transition: width .5s;
+}
+
+.catalog{
+	position: sticky;
+	z-index: 1000;
+	top: 50px;
+	right: 0px;
+	height: calc(100vh - 50px);
+    width: 27vw;
+    min-width: 300px;
+    max-width: 500px;
+	overflow-y: auto;
+    overflow-x: hidden;
+    background: var(--color-main-background);
+    border-left: 1px solid var(--color-border);
+}
+
+.catalog .title{
+	text-align: center;
+}
+
+.catalog ul,li{
+	padding: 0px;
+	margin: 0px;
+	list-style: none;
+}
+
+.catalog .item{
+	background-size: 16px 16px;
+    background-position: 14px center;
+    background-repeat: no-repeat;
+    display: block;
+    justify-content: space-between;
+    line-height: 44px;
+    min-height: 44px;
+    padding: 0 12px 0 44px;
+    overflow: hidden;
+    box-sizing: border-box;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    color: var(--color-main-text);
+    opacity: 0.57;
+    flex: 1 1 0px;
+}
+
+.app-sidebar__close{
+	position: absolute;
+    width: 44px;
+    height: 44px;
+    top: 0;
+    right: 0;
+    z-index: 100;
+    opacity: .7;
+    border-radius: 22px;
+}
+
+.app-sidebar__close:hover{
+	opacity: 1;
+    background-color: rgba(127,127,127,0.25);
+}
+
+.color_skybule{
+	color: #28ADF6 !important;
+}
+
+.empty{
+	text-align: center;
+	font-size: 30px;
+	padding-top: 100px;
+	font-weight: 1000;
+	color: grey;
 }
 
 @media only screen and (min-width: 600px) {
