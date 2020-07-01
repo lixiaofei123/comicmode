@@ -1,52 +1,14 @@
-Place this app in **nextcloud/custom_apps/**
+Place this app in **nextcloud/custom_apps/** **~~nextcloud/apps/~~**
 
-## Building the app
+When you read comics on nextcloud, you may need this plugin to help you read better.
 
-The app can be built by using the provided Makefile by running:
+We provide a more user-friendly UI interface, allowing you to read like on a comic site. We also support the automatic recognition of comic sequences, and automatically analyze the previous chapter to the next chapter to provide you with a detailed reading experience.
 
-    make
+*Suppose you have such a directory with several pictures*
+![filelist](https://raw.githubusercontent.com/lixiaofei123/comicmode/master/img/filelist.png)
 
-This requires the following things to be present:
-* make
-* which
-* tar: for building the archive
-* curl: used if phpunit and composer are not installed to fetch them from the web
-* npm: for building and testing everything JS, only required if a package.json is placed inside the **js/** folder
+*You can see a Pac-Man icon at the back of each directory*
+![comicbtn](https://github.com/lixiaofei123/comicmode/blob/master/img/comicbtn.png?raw=true)
 
-The make command will install or update Composer dependencies if a composer.json is present and also **npm run build** if a package.json is present in the **js/** folder. The npm **build** script should use local paths for build systems and package managers, so people that simply want to build the app won't need to install npm libraries globally, e.g.:
-
-**package.json**:
-```json
-"scripts": {
-    "test": "node node_modules/gulp-cli/bin/gulp.js karma",
-    "prebuild": "npm install && node_modules/bower/bin/bower install && node_modules/bower/bin/bower update",
-    "build": "node node_modules/gulp-cli/bin/gulp.js"
-}
-```
-
-
-## Publish to App Store
-
-First get an account for the [App Store](http://apps.nextcloud.com/) then run:
-
-    make && make appstore
-
-The archive is located in build/artifacts/appstore and can then be uploaded to the App Store.
-
-## Running tests
-You can use the provided Makefile to run all tests by using:
-
-    make test
-
-This will run the PHP unit and integration tests and if a package.json is present in the **js/** folder will execute **npm run test**
-
-Of course you can also install [PHPUnit](http://phpunit.de/getting-started.html) and use the configurations directly:
-
-    phpunit -c phpunit.xml
-
-or:
-
-    phpunit -c phpunit.integration.xml
-
-for integration tests
-# comicmode
+*Click this icon to start browsing*
+![comic mode](https://github.com/lixiaofei123/comicmode/blob/master/img/comicmode.png?raw=true)
