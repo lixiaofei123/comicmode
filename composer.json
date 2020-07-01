@@ -1,0 +1,15 @@
+{
+    "name": "Comic Mode",
+    "description": "test",
+    "type": "project",
+    "license": "AGPL",
+    "authors": [
+        {
+            "name": "lixiaofei"
+        }
+    ],
+    "require": {},
+    "require-dev": {
+        "phpunit/phpunit": "^5.4"
+    }
+}
