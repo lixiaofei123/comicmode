@@ -28,7 +28,7 @@
 					</div>
 				</div>
 				<div v-else>
-					<div class="empty" v-text="t('comicmode', 'This folder is empty')" />
+					<div class="empty" v-text="tips" />
 				</div>
 			</div>
 		</div>
@@ -72,6 +72,7 @@ export default {
 		return {
 			dir: '',
 			imgMaxWidth: '600px',
+			tips: '',
 			chapters: [],
 			showCatalog: false,
 			icons: {
@@ -116,6 +117,7 @@ export default {
 	},
 	methods: {
 		async init() {
+			this.tips = t('comicmode', 'Trying to load')
 			this.dir = document.getElementsByName('dir')[0].value
 			if (this.dir.endsWith('/')) {
 				this.dir = this.dir.substring(0, this.dir.length - 1)
@@ -127,45 +129,50 @@ export default {
 
 			if (status === 'OK') {
 				let files = data.files
-				files = files.sort(this.sort)
-				this.imglist = files.map(f => {
-					return {
-						name: f.name,
-						url: OC.generateUrl('/remote.php/webdav/' + this.dir + '/' + f.name),
-					}
-				})
-				const imgLazyProcessor = new ImgLazyProcessor({
-					dataset: true,
-					bgColor: '#aec2d3',
-					bgSize: '40%',
-					bgPosition: 'center',
-					bgRepeat: 'no-repeat',
-					delay: false,
-					delayTime: 300,
-					disable: false,
-				})
-				setTimeout(() => {
-					this.imglist.forEach(img => {
-						const imgEle = document.getElementById(img.name)
-					 imgLazyProcessor.observe(imgEle)
-					})
-					let brothers = data.brothers
-					if (brothers.length > 0) {
-						brothers = brothers.sort(this.sort)
-						for (let i = 0; i < brothers.length; i++) {
-							const chapter = {
-								name: brothers[i].name,
-								url: OC.generateUrl('/apps/comicmode/?dir=' + this.parentDir + '/' + brothers[i].name),
-							}
-							if (brothers[i].name === this.title) {
-								chapter.isCurrent = true
-							}
-							this.chapters.push(chapter)
-
+				if (files.length !== 0) {
+					files = files.sort(this.sort)
+					this.imglist = files.map(f => {
+						return {
+							name: f.name,
+							url: OC.generateUrl('/remote.php/webdav/' + this.dir + '/' + f.name),
 						}
-					}
+					})
+					const imgLazyProcessor = new ImgLazyProcessor({
+						dataset: true,
+						bgColor: '#aec2d3',
+						bgSize: '40%',
+						bgPosition: 'center',
+						bgRepeat: 'no-repeat',
+						delay: false,
+						delayTime: 300,
+						disable: false,
+					})
+					setTimeout(() => {
+						this.imglist.forEach(img => {
+							const imgEle = document.getElementById(img.name)
+							imgLazyProcessor.observe(imgEle)
+						})
+						let brothers = data.brothers
+						if (brothers.length > 0) {
+							brothers = brothers.sort(this.sort)
+							for (let i = 0; i < brothers.length; i++) {
+								const chapter = {
+									name: brothers[i].name,
+									url: OC.generateUrl('/apps/comicmode/?dir=' + this.parentDir + '/' + brothers[i].name),
+								}
+								if (brothers[i].name === this.title) {
+									chapter.isCurrent = true
+								}
+								this.chapters.push(chapter)
 
-				}, 500)
+							}
+						}
+
+					}, 500)
+				} else {
+					this.tips = t('comicmode', 'This folder is empty')
+
+				}
 
 			} else {
 				OCP.Toast.error(t('comicmode', data.reason))

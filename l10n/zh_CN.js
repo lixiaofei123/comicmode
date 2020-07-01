@@ -7,6 +7,7 @@ OC.L10N.register(
         'previous chapter' : '上一章',
         'next chapter' : '下一章',
         'chapter' : '章节',
-        'This folder is empty' : '这个文件夹里空空如也'
+        'This folder is empty' : '这个文件夹里空空如也',
+        'Trying to load' : '正在努力加载中'
     },''
 )
