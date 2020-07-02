@@ -249,7 +249,7 @@ export default {
 			this.imglist = []
 			let files = data.files
 			if (files.length !== 0) {
-				// this.readRecord()
+				this.readRecord()
 				files = files.sort(this.sort)
 				this.imglist = files.map(f => {
 					return {
@@ -272,7 +272,7 @@ export default {
 						const imgEle = document.getElementById(img.name)
 						imgLazyProcessor.observe(imgEle)
 					})
-				}, 1000)
+				}, 500)
 			} else {
 				this.tips = t('comicmode', 'This folder is empty')
 			}
@@ -331,6 +331,7 @@ export default {
 			this.goto(this.nextChapter.name)
 		},
 		goto(name) {
+			this.dir = this.parentDir + '/' + name
 			this.loadData(name)
 		},
 		catalog() {
