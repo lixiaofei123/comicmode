@@ -25,9 +25,20 @@ class PageController extends Controller {
 	 * @NoCSRFRequired
 	 */
 	public function index($dir = '/') {
-
 		$params = [];
 		$params['dir'] = $dir;
+		$params['page'] = 'record';
+		return new TemplateResponse('comicmode', 'index',$params);  // templates/index.php
+	}
+
+	/**
+	 * @NoAdminRequired
+	 * @NoCSRFRequired
+	 */
+	public function read($dir = '/') {
+		$params = [];
+		$params['dir'] = $dir;
+		$params['page'] = 'comic';
 		return new TemplateResponse('comicmode', 'index',$params);  // templates/index.php
 	}
 

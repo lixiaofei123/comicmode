@@ -40,6 +40,7 @@ class ComicApiController extends ApiController{
                         ]);
                     }
                 }
+                $parendId = -1;
                 $brotherDirs = array();
                 if($dir != '/'){
                     $parent = $file -> getParent();
@@ -52,12 +53,15 @@ class ComicApiController extends ApiController{
                                 ]);
                             }
                         }
+                        $parendId = $parent->getId();
+
                     }
                 }
                 return new JSONResponse([
                     'status' => 'OK',
                     'files' => $imgs,
                     'brothers' => $brotherDirs,
+                    'parendId' => $parendId
                 ]);
             }else{
                 return new JSONResponse([

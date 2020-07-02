@@ -15,7 +15,7 @@
 
         ### Click this icon to start browsing
         ![comic mode](https://github.com/lixiaofei123/comicmode/blob/master/img/comicmode.png?raw=true)]]></description>
-    <version>0.0.1</version>
+    <version>0.0.6</version>
     <licence>agpl</licence>
     <author mail="326256365@qq.com" >lixiaofei</author>
     <namespace>ComicMode</namespace>
@@ -28,5 +28,9 @@
         <nextcloud min-version="12" max-version="19"/>
     </dependencies>
     <navigations>
+        <navigation>
+            <name>Comic Mode</name>
+            <route>comicmode.page.index</route>
+        </navigation>
     </navigations>
 </info>

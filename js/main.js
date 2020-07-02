@@ -1,6 +1,6 @@
 function openComic(file,data){
     let path = data.dir + '/' + file
-    window.location.href = OC.generateUrl('/apps/comicmode/?dir=' + path)
+    window.location.href = OC.generateUrl('/apps/comicmode/read?dir=' + path)
 }
 
 function registerFileActions(){

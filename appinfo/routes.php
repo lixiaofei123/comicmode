@@ -8,8 +8,12 @@
  * it's instantiated in there
  */
 return [
+    'resources' => [
+		'record_api' => ['url' => '/api/0.1/records']
+	],
     'routes' => [
-	   ['name' => 'page#index', 'url' => '/', 'verb' => 'GET'],
+       ['name' => 'page#index', 'url' => '/', 'verb' => 'GET'],
+       ['name' => 'page#read', 'url' => '/read', 'verb' => 'GET'],
        ['name' => 'comic_api#index', 'url' => '/api/1.0/list.json', 'verb' => 'GET'],
        ['name' => 'comic_api#preflighted_cors', 'url' => '/api/0.1/{path}','verb' => 'OPTIONS', 'requirements' => ['path' => '.+']]
     ]
