@@ -213,7 +213,7 @@ export default {
 		},
 		async loadRecords() {
 			this.listAllRecords().then(records => {
-				this.records = records
+				this.records = records.sort((r1, r2) => r1.lastReadTime - r2.lastReadTime)
 			}).catch(() => {
 				console.error('load read record failed')
 			})
