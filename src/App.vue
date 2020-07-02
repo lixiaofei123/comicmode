@@ -249,7 +249,7 @@ export default {
 			this.imglist = []
 			let files = data.files
 			if (files.length !== 0) {
-				this.readRecord()
+				// this.readRecord()
 				files = files.sort(this.sort)
 				this.imglist = files.map(f => {
 					return {
