@@ -272,7 +272,7 @@ export default {
 						const imgEle = document.getElementById(img.name)
 						imgLazyProcessor.observe(imgEle)
 					})
-				}, 500)
+				}, 1000)
 			} else {
 				this.tips = t('comicmode', 'This folder is empty')
 			}
