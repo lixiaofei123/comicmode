@@ -10,7 +10,7 @@
 						<div class="imglist">
 							<div v-if="hasImg">
 								<div v-for="img in imglist" :key="img.name">
-									<img :id="img.url"
+									<img :id="img.name"
 										class="img"
 										:style="{'max-width':imgMaxWidth}"
 										:origin-src="img.url">
@@ -219,6 +219,9 @@ export default {
 			})
 		},
 		async loadData(dirname) {
+			while (this.imglist.length !== 0) {
+				this.imglist.splice(0, 1)
+			}
 			this.tips = t('comicmode', 'Trying to load')
 			const url = OC.generateUrl('/apps/comicmode/api/1.0/list.json?dir=' + this.parentDir + '/' + dirname)
 			document.title = dirname + '-' + this.btitle
@@ -246,7 +249,6 @@ export default {
 			})
 		},
 		loadImages(data) {
-			this.imglist = []
 			let files = data.files
 			if (files.length !== 0) {
 				this.readRecord()
