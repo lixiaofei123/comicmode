@@ -10,7 +10,7 @@
 						<div class="imglist">
 							<div v-if="hasImg">
 								<div v-for="img in imglist" :key="img.name">
-									<img :id="img.name"
+									<img :id="img.url"
 										class="img"
 										:style="{'max-width':imgMaxWidth}"
 										:origin-src="img.url">
