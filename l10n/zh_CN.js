@@ -18,9 +18,9 @@ OC.L10N.register(
         'Delete is not Success' : '删除失败，请稍后重试',
         'Read' : '阅读',
         '<{chapterName}> of <{bookName}>' : '《{bookName}》 之 《{chapterName}》',
-        '{num} seconds ago' : '{}秒前',
-        '{num} minutes ago' : '{}分钟前',
-        '{num} hours ago' : '{}小时前',
-        '{num} days ago' : '{}天前'
+        '{num} seconds ago' : '{num}秒前',
+        '{num} minutes ago' : '{num}分钟前',
+        '{num} hours ago' : '{num}小时前',
+        '{num} days ago' : '{num}天前'
     },''
 )

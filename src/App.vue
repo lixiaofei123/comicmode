@@ -380,11 +380,11 @@ export default {
 }
 
 .activity .activity-action{
-	width:200px;
+	width:120px;
 }
 
 .activity .activity-time{
-	width:150px;
+	width:120px;
 	line-height: 40px;
 }
 

@@ -16,10 +16,10 @@
         "Read history": "阅读记录",
         "Delete" : "删除",
         "Read" : "阅读",
-        "{num} seconds ago" : "{}秒前",
-        "{num} minutes ago" : "{}分钟前",
-        "{num} hours ago" : "{}小时前",
-        "{num} days ago" : "{}天前"
+        "{num} seconds ago" : "{num}秒前",
+        "{num} minutes ago" : "{num}分钟前",
+        "{num} hours ago" : "{num}小时前",
+        "{num} days ago" : "{num}天前"
     },
     "pluralForm": ""
 }
