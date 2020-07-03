@@ -6,7 +6,7 @@ This is a nextcloud plugin that can help you better read your comics stored on n
 
 When you read comics on nextcloud, you may need this plugin to help you read better.
 
-We provide a more user-friendly UI interface, allowing you to read like on a comic site. We also support the automatic recognition of comic sequences, and automatically analyze the previous chapter to the next chapter to provide you with a detailed reading experience.
+We provide a more user-friendly UI interface so that you can read it as you would on a comic site. We also support automatic identification of comic catalogs. At the same time, we provide the function of saving reading records, your browsing records will be saved on the cloud instance of nextcloud, and synchronized to your various devices.
 
 ## How to install it?
 
