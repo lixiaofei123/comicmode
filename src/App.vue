@@ -333,6 +333,7 @@ export default {
 			this.goto(this.nextChapter.name)
 		},
 		goto(name) {
+			this.up()
 			this.dir = this.parentDir + '/' + name
 			this.loadData(name)
 		},
