@@ -337,6 +337,7 @@ export default {
 		goto(name) {
 			this.dir = this.parentDir + '/' + name
 			this.loadData(name)
+			this.up()
 		},
 		catalog() {
 			this.showCatalog = !this.showCatalog
