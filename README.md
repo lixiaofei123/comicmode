@@ -10,14 +10,14 @@ We provide a more user-friendly UI interface so that you can read it as you woul
 
 ## How to install it?
 
-Place clone this repo and put it in **nextcloud/custom_apps/** **~~nextcloud/apps/~~**
+Clone this repo and put it in **nextcloud/custom_apps/** **~~nextcloud/apps/~~**
 
 ## What it can't do
 
 it is just a tool to help you better browse comics, the plugin itself does not provide any comic resources
 
 
-## Some screenshot
+## Some screenshots
 
 Suppose you have such a directory with several pictures (eg: '/comics/Fish Man/Chapter 3' )
 
