@@ -44,7 +44,7 @@
 						</div>
 						<div class="chapterinfo">
 							<div class="title" v-text="comicName" />
-							<p v-text="t('comicmode','current {current} chapter / total {total} chapter',
+							<p v-text="t('comicmode','current {current}th chapter / total {total} chapters',
 								{current: currentChapter,total:chapterNums})" />
 						</div>
 						<div class="btns" />
@@ -86,7 +86,7 @@
 						<div class="records-area">
 							<div v-for="record in records" :key="record.id" class="activity">
 								<div class="activity-title"
-									v-text="t('comicmode','<{chapterName}> of <{bookName}>',
+									v-text="t('comicmode','{chapterName} of {bookName}',
 										{chapterName:record.chapterName,bookName:record.comicName})" />
 								<div class="activity-info">
 									<div class="activity-action">
