@@ -88,15 +88,17 @@
 								<div class="activity-title"
 									v-text="t('comicmode','<{chapterName}> of <{bookName}>',
 										{chapterName:record.chapterName,bookName:record.comicName})" />
-								<div class="activity-action">
-									<Actions>
-										<ActionButton icon="icon-delete" @click="deleteRecordData(record)" v-text="t('comicmode','Delete')" />
-									</Actions>
-									<Actions>
-										<ActionButton icon="icon-toggle" @click="view(record)" v-text="t('comicmode','Read')" />
-									</Actions>
+								<div class="activity-info">
+									<div class="activity-action">
+										<Actions>
+											<ActionButton icon="icon-delete" @click="deleteRecordData(record)" v-text="t('comicmode','Delete')" />
+										</Actions>
+										<Actions>
+											<ActionButton icon="icon-toggle" @click="view(record)" v-text="t('comicmode','Read')" />
+										</Actions>
+									</div>
+									<div class="activity-time" v-text="beautyTime(record.lastReadTime)" />
 								</div>
-								<div class="activity-time" v-text="beautyTime(record.lastReadTime)" />
 							</div>
 						</div>
 					</AppContentDetails>
@@ -391,6 +393,14 @@ export default {
 	line-height: 40px;
 }
 
+.activity .activity-info{
+	width:240px;
+}
+
+.activity .activity-info div{
+	display: inline;
+}
+
 .page{
     padding: 0px;
 	width: 100%;
@@ -601,10 +611,15 @@ li {
 	color:black;
 }
 
-@media only screen and (min-width: 600px) {
-  .gt800px {
-    display: flex;
-  }
+@media only screen and (max-width: 600px) {
+  .activity{
+	    flex-direction: column;
+	}
+
+	.activity .activity-info{
+		width:100%;
+		text-align: right;
+	}
 }
 
 </style>
