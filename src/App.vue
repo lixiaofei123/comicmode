@@ -613,6 +613,12 @@ li {
 	color:black;
 }
 
+@media only screen and (min-width: 600px) {
+  .gt800px{
+	display: flex;
+	}
+}
+
 @media only screen and (max-width: 600px) {
   .activity{
 	    flex-direction: column;
