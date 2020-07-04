@@ -335,6 +335,7 @@ export default {
 			this.goto(this.nextChapter.name)
 		},
 		goto(name) {
+			this.closeCatalog()
 			this.dir = this.parentDir + '/' + name
 			this.loadData(name)
 			this.up()
