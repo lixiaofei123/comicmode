@@ -13,7 +13,7 @@ export default {
 			} else if (subtime <= 1000 * 60 * 60 * 24 * 7) {
 				return t('comicmode', '{num} days ago', { num: Math.ceil(subtime / (1000 * 60 * 60 * 24)) })
 			} else {
-				dateFormat(new Date(time * 1000), 'yyyy-dd-mm HH:MM:ss')
+				return dateFormat(new Date(time * 1000), 'yyyy-dd-mm HH:MM:ss')
 			}
 
 		},
